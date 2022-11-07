@@ -407,6 +407,10 @@ if (age<23){
 ## For a given vector whose elements are 4,5,-9,6,7,12,-3. 
 ## Please classify them as odd and even by using ifelse 
 
+vct<-c(4,5,-9,6,7,12,-3)
+
+ifelse(vct%%2==0,"even","odd")
+
 
 #### 2. for loops ####
 # In R , for loops take an interator variable and 
@@ -451,6 +455,15 @@ print(sum)
 # if it is negative, print "it is a negative number". 
 # If it is equals to zero, print "it equals to zero"
 
+v <- c(4,5,-6,2,0,-2,4)
+
+for(i in 1:length(v)){
+  if(v[i]>0){print("It is a positive number.")}
+  else if (v[i]<0){print("It is a negative number.")}
+  else{print("It equals to zero. ")}
+}
+
+
 ##### Nested for loops #####
 
 ## for loops can be nested inside of each other.
@@ -479,7 +492,17 @@ for (i in 1:nrow(m)) {
 # Create a matrix of size 6 by 6, where the entries are equal to 
 # the summation of the row and column number.
 
+m <- matrix(0,6,6)
 
+m
+
+for(i in 1:nrow(m)){
+  for(j in 1:ncol(m)){
+    m[i,j] = i+j
+  }
+}
+
+m
 
 #### 3. While loop ####
 
@@ -531,6 +554,16 @@ while(invest >= 5 && invest <=10){
 # s = 1 + 2 + 2^2 + 2^3 + ... + 2^8 
 
 
+s <- 0
+
+n <- 0
+
+while(n<=8){
+  s <- s + 2^n
+  n <- n+1
+}
+
+s
 
 ##### break and next #### 
 
@@ -600,7 +633,14 @@ for (val in x) {
 
 # How many values between 1 and 1000 are exactly divided by 4?  
 
+number <- 0 
 
+for(i in 1:1000){
+  if(i %% 4){ number <- number +1}
+  else {next}
+}
+
+number
 
 ##### repeat ##### 
 
@@ -659,13 +699,28 @@ sum.of.square<-function(x,y){
 
 #Write a function that shows the larger number among the given two inputs 
 
+larger <- function(number1,number2){ifelse(number1>number2,number1,number2)}
+
+larger(5,8)
 
 ##### Exercise 4.2 #####
 
 #Write a function that prints and identity matrix 
 
+iden_matrix <- function(dim_no){
+  m<-matrix(0,dim_no,dim_no)
+  for(i in 1:nrow(m)){
+    for(j in 1:ncol(m)){
+      if(i ==j){m[i,j] = 1}
+      else {m[i,j]= 0}
+    }
+  }
+  return(m)
+}
 
+iden_matrix(5)
 
+iden_matrix(8)
 
 #### 5. Reading Data Sets in R ####
 
