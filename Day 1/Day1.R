@@ -308,21 +308,29 @@ rep(seq(1,9,3),each=4) #replicates the numbers in the sequence 4 times
 
 ### Use  seq() function to generate the following sequence  9, 18, 27, 36, 45.
 
+seq(9,45,9)
+
 ###### Exercise 3.2 #####
 
 ### Please create the following sequences 
 
 ##### a sequence from 0 to 9 and from 30 to 10.
 
+0:9
+
+seq(30,10,-1)
 
 ##### a sequence from 0 to 20 by 2 increments.
 
+seq(0,20,2)
 
 ##### a sequence from 1 to 10 by 3 increments where each item is repeated 4 times. 
 
+rep(seq(1,10,3),each =4)
 
 ##### a sequence from 1 to 10, repeating 4 times.
 
+rep(seq(1,10,1),4)
 
 ##### Vectors #####
 
@@ -443,31 +451,41 @@ which(metu=="odtu")
 
 ### Create the vector (0,1,1,2,3,5,8,13,21,34) 
 
+vct <- c(0,1,1,2,3,5,8,13,21,34) 
 
 #the third element 
 
+vct[3]
 
 #the first, the second and the third element 
 
+vct[1:3]
 
 #the elements 1,2,4 and 8  
 
+vct[c(1,2,4,8)]
 
 #what is the index of 34 in the vector? 
 
+which(vct == 34)
 
-#rearrange the vector so that the first element is the last one, the second one is the second from the last, and so on. Naturally, the last one is the first one. 
+#rearrange the vector so that the first element is the last one, 
+#the second one is the second from the last, and so on. Naturally, the last one is the first one. 
 
+vct[seq(length(vct),1,-1)]
 
 #the elements corresponding to the odd-numbered indices 
 #by using TRUE and FALSE logical values.
 
+vct[1:length(vct)%%2 ==0]
 
 #all the elements between 5 and 20.
 
+vct[vct>=5 & vct<=20]
 
 #all the elements smaller than 5 or greater than 20.
 
+vct[vct<5 | vct>20]
 
 ###### Vector Operations ######
 
@@ -895,15 +913,22 @@ information2 <- data.frame( age = c(20,25,28),
 str(information)
 
 
-information$birth_date <- ymd(information1$birth_date)
+information$birth_date <- ymd(information$birth_date)
 
 information
 
 ###### Exercise 3.4 ###### 
 
-## Convert birth_date columns in information1 and information2 to a date object
+## Convert birth_date columns in information1 and information2 
+#to a date object
 
+information1$birth_date <- ymd(information1$birth_date)
 
+information2$birth_date <- dmy(information2$birth_date)
+
+str(information1)
+
+str(information2)
 
 #### 4. Specific Applications ####
 
