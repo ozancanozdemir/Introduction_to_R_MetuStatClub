@@ -1,0 +1,361 @@
+---
+title: "Stat 291-Homework 1 Answer Key"
+author: "Ozancan ?zdemir"
+output: word_document
+---
+
+## Question 1 
+
+**a) Please fill in the blanks.**
+
+I) Vectors in R are created by using ** c() ** command.
+II) Both ** matrix()** and ** c() ** commands are used to create a matrix in R.
+III) Vectors are combined with **data.frame()** command to create a data frame in R.
+
+#b) Use the command line in R to get help on the following commands. Briefly describe the purpose of each command.
+
+I) which
+
+```{r}
+help(which)
+```
+
+It gives the TRUE indices of a logical object, allowing for array indices.
+
+II) sort()
+
+```{r}
+help(sort)
+```
+
+It orders a vector or factor (partially) into ascending or descending order.
+
+## Question 2
+
+**a)**
+
+```{r}
+seq(1,9,2)
+```
+
+**b)**
+
+```{r}
+seq(8,20,2.4)
+```
+
+**c)**
+
+```{r}
+rep(seq(1,4),3)
+```
+
+**d)**
+
+```{r}
+rep(seq(1,4),each=3)
+```
+
+## Question 3
+
+**a)**
+
+```{r}
+height<-c(180,165,160,193,175,156)
+```
+
+```{r}
+weight<-c(87,58,65,100,80,60)
+```
+
+**b)**
+
+```{r}
+mean(height)
+```
+
+The average value of height is 171.5 cm.
+
+```{r}
+sd(height)
+```
+
+The deviation value is 13.86 which can be considered as high.
+
+```{r}
+mean(weight)
+```
+
+The average value of weight is 75 kg.
+
+```{r}
+sd(weight)
+```
+
+The deviation value is 16.78 which can be considered as high.
+
+
+**d)**
+
+```{r}
+length(which(height>mean(height)))
+```
+
+There are three people whose heights are above the average.
+
+**e)**
+
+```{r}
+length(which(weight<mean(weight)))
+```
+
+There are three people whose weights are below the average.
+
+**f)**
+
+```{r}
+maxweight<-max(weight)
+minweight<-min(weight)
+cbind(maxweight,minweight)
+```
+
+**g)**
+
+```{r}
+maxheight<-max(height)
+minheight<-min(height)
+cbind(maxheight,minheight)
+```
+
+
+**h)**
+
+In this question you have be careful about the unit of height. The observations are recorded in terms of cm. However, the calculation of BMI requires height values in terms of m. So, you have to convert your observations from cm to m.
+
+```{r}
+height_m<-height/100
+height_m
+```
+
+```{r}
+BMI<-weight/(height_m^2)
+BMI
+```
+
+```{r}
+logBMI<-log(BMI)
+logBMI
+```
+
+```{r}
+BMInew<-BMI[which(BMI>25)]
+BMInew
+```
+
+## Question 4
+
+```{r}
+X<-matrix(c(3,-1,2,1),2,2)
+X
+```
+
+```{r}
+Y<-matrix(c(1,0,4,1,0,-1),2,3)
+Y
+```
+
+```{r}
+2*X #multiplying matrix X with 2
+```
+
+```{r}
+X*X #multiplying matrix X with itself as component-wise
+```
+
+```{r}
+X%*%X #multiplying matrix X with itself
+```
+
+```{r}
+X%*%Y #multiplying matrix X with matrix Y
+```
+
+```{r}
+t(Y) #taking the transpose of matrix Y
+```
+
+```{r}
+solve(X) #Taking the inverse of matrix X
+```
+
+## Question 5
+
+```{r}
+A<-matrix(c(6,1,1,1,5,8,9,9,9,8,2,3,1,1,3,8),4,4)
+A
+```
+
+**a)**
+
+```{r}
+t(A)
+```
+
+**b)**
+
+```{r}
+A[,c(1,3)]
+```
+
+**c)**
+
+```{r}
+A[c(2,4),]
+```
+
+**d)**
+
+```{r}
+det(A)
+```
+
+**e)**
+
+```{r}
+A[2,1]
+```
+
+**f)**
+
+```{r}
+A[1:2,3:4]
+```
+
+## Question 6
+
+```{r}
+name<-c("bldg1","bldg2","bldg3","bldg4","bldg5","bldg6")
+survey<-c(1,1,1,2,2,2)
+location<-c(1,2,3,2,3,1)
+floors<-c(5,10,10,11,8,12)
+efficiency<-c(51,64,70,71,80,58)
+data<-data.frame(name,survey,location,floors,efficiency)
+data
+```
+
+**a)**
+
+```{r}
+dim(data)
+```
+
+**b)**
+
+```{r}
+data[,-1]
+```
+
+**c)**
+
+```{r}
+data[,3:5]
+```
+
+**d)**
+
+```{r}
+data$name[data$efficiency>50]
+```
+
+**e)**
+
+```{r}
+data$name[data$floors>=10]
+```
+
+**f)**
+
+```{r}
+data$efficiency[6]<-78
+data
+```
+
+**g)**
+
+
+```
+write.table(data,"data.txt")
+```
+
+## Question 7
+
+
+```{r}
+sum<-0 
+for (i in 1:30){ sum<-sum+(i^2) } 
+sum
+```
+
+
+
+## Question 8
+
+```{r}
+fibo<-c() 
+for (i in 1:12){
+  fibo[1]=1 
+  fibo[2]=2 
+  fibo[i+2]=fibo[i+1]+fibo[i] 
+  } 
+
+fibo
+```
+
+## Question 9
+
+```{r}
+n<-6
+mymat<-matrix(0,n,n)
+
+for ( i in 1:nrow(mymat))   {
+for ( j in 1:ncol(mymat))  {
+if ( i==j)  {mymat[i,j]<-1}
+else { mymat[i,j]<-i+j }
+
+}
+}
+mymat
+```
+
+
+
+## Question 10
+
+```{r}
+math_function<-function(x){
+  if(x<=3){y = (3*x)+2 }
+  else{y = (2*x)-(0.5*x^2)}
+  return(y)
+}
+```
+
+```{r}
+math_function(2)
+```
+
+```{r}
+math_function(6)
+```
+
+##Question 11
+
+```{r}
+fact = function(n)
+{
+if(n<=1) 1
+else n*fact(n-1)
+}
+
+fact(4)
+```
+
