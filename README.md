@@ -10,6 +10,8 @@ After the course, the materials will be modified and released as a R package whi
 
 + You can display the R file for Day 2 from [here](https://github.com/ozancanozdemir/Introduction_to_R_MetuStatClub/blob/main/Day%202/Day2.R)
 
++ You can download the materials for Day 3 from [here](https://users.metu.edu.tr/ozancan/Day%203.zip)
+
 #### Exercises 
 
 + You can download the exercise sheet from [here](https://github.com/ozancanozdemir/Introduction_to_R_MetuStatClub/raw/main/Day%201/Exercises1.pdf)
