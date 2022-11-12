@@ -353,23 +353,34 @@ head(data)
 
 
 
+head(data)
+
+
 #b) Assume you want to extract temp column
 
 
 
+data$temp
+
+
 
 #c)Assume you want to remove 2nd,5th and 7th rows of the data
+
+data[-c(2,5,7),]
 
 
 
 #d)Assume you want to construct a new matrix that includes only 
 #names whose temp values are between 50 and 70
 
+data[data$temp>50&data$temp<70,]
+
 
 
 #e)Which country has the highest temperature? 
 
 
+data$Name[which.max(data$temp)]
 
 #### 1. Calculating Summary Statistics #####
 
@@ -565,13 +576,26 @@ replace(sample_data$v2, is.na(sample_data$v2), median(sample_data$v1,na.rm= T)) 
 
 # Read tao.csv into R
 
+
+tao <- read.csv("tao.csv",header = T)
+head(tao)
+
 # Calculate the total number of missing values
+
+sum(is.na(tao))
 
 # Show the variables that have missing values and not have missing values
 
+summary(tao)
+summary(is.na(tao))
+
 # Calculate the mean of Air Temperature after median imputation 
 
-# Calculate the sum of Humidity after mean inputation 
+mean(replace(tao$Air.Temp,is.na(tao$Air.Temp),median(tao$Air.Temp,na.rm = TRUE)))
+
+# Calculate the sum of Humidity after mean imputation 
+
+sum(replace(tao$Humidity,is.na(tao$Humidity),median(tao$Humidity,na.rm = TRUE)))
 
 
 #### 3. Apply Family ####
@@ -720,13 +744,15 @@ mymatrix
 
 # Get the mean of each row
 
+apply(mymatrix, 1, FUN = mean)
+
 
 #  Get the mean of each column
-
+apply(mymatrix, 2, FUN = mean)
 
 # Sort the columns in ascending order
 
-
+apply(mymatrix, MARGIN = 2, FUN = sort)
 
 
 ##### Example 3.2 #####
@@ -735,17 +761,23 @@ mymatrix
 #Which columns in mtcars dataset have observations which are greater than 20? 
 #If they have, how many? 
 
+sapply(mtcars, function(x) length(x[x>20]))
 
 
 ##  Use two 'apply' family functions to get the minimum values of each 
 #column of the 'mtcars' dataset (hint: 'lapply', 'sapply'). 
 ## Explain the difference between type of outputs.
 
+lapply(mtcars,min)
+sapply(mtcars,min)
 
 
 ## Use the mapply() function to find out how many mpg values are greater 
 ## than 10, how many cylinders are greater than 6 and how many displacement 
 ## values are greater than 300. 
+
+check<-function(x,treshold){sum(x>treshold)}
+mapply(check,mtcars[,1:3],c(10,6,300))
 
 
 ## (Hint: You should create a user defined function.)
