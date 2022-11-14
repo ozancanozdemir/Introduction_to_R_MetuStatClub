@@ -12,6 +12,8 @@ After the course, the materials will be modified and released as a R package whi
 
 + You can download the materials for Day 3 from [here](https://users.metu.edu.tr/ozancan/Day%203.zip) 
 
++ You can download the materials for Day 4 from [here](https://users.metu.edu.tr/ozancan/Day%204.zip) 
+
 **Note that the solutions of all inclass exercises are uploaded.**
 
 #### Exercises 
