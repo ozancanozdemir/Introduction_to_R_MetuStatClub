@@ -30,4 +30,5 @@ After the course, the materials will be modified and released as a R package whi
 
 + Note that you have to solve at least 8 questions to pass the first phase of the course. 
 
++ Quiz 2 Solution can be accessed from the related folder. 
 
