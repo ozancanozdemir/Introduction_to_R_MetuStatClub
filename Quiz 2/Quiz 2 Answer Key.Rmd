@@ -1,0 +1,268 @@
+---
+title: "Quiz 2 Answer Key"
+output:
+  word_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**Question 1**
+
+```{r}
+library(mlbench)
+```
+
+```{r}
+data("PimaIndiansDiabetes")
+```
+
+```{r}
+head(PimaIndiansDiabetes) # show first six observations
+```
+
+
+**a) What is the average value of 2-Hour serum insulin?**
+
+```{r}
+mean(PimaIndiansDiabetes$insulin)
+```
+
+**b) What is the average value of 2-Hour serum insulin in terms of level of diabetes ?**
+
+```{r}
+aggregate(x = PimaIndiansDiabetes$insulin, by = list(PimaIndiansDiabetes$diabetes), FUN = "mean")
+
+```
+
+**c) Which level in diabeets variable has more variability around it's average value for 2-Hour serum insulin?**
+
+```{r}
+aggregate(x = PimaIndiansDiabetes$insulin, by = list(PimaIndiansDiabetes$diabetes), FUN = "sd")
+```
+
+**d) Measure the correlation coefficient between age and glucose of participants.**
+
+```{r}
+cor(PimaIndiansDiabetes$age,PimaIndiansDiabetes$glucose)
+```
+
+**e) Create a table with summary command for all variables.**
+
+```{r}
+summary(PimaIndiansDiabetes)
+```
+**Question 2**
+
+Read the dataset.
+
+```{r}
+ship<-read.table("ship.txt",header=T)
+head(ship)
+```
+
+```{r}
+dim(ship)
+```
+
+It is seen that the ship dataset have 158 rows and 9 columns. 
+
+**a) Please find the name of the ships that has maximum age, maximum tonnage, maximum passenger,maximum length, maximum cabin and maximum crew separetely.**
+
+
+```{r}
+Questions=c("Max.Age","Max.Ton","Max.Pass","Max.Length","Max.Cabin","Max.Crew")
+```
+
+```{r}
+Answers=c(as.character(ship$name[which.max(ship$age)][1]),as.character(ship$name[which.max(ship$tonnage)][1]),as.character(ship$name[which.max(ship$passengers)][1]),as.character(ship$name[which.max(ship$length)][1]),as.character(ship$name[which.max(ship$cabin)][1]),as.character(ship$name[which.max(ship$crew)][1]))
+```
+
+```{r}
+data=data.frame(Questions,Answers)
+data
+```
+
+
+
+**b) Obtain the summary of the dataset**
+
+```{r}
+summary(ship)
+```
+
+**Example Interpretation:** 
+
+It is seen that the average length of ships is 8.131, while it's median is 8.555. Since median is greater than mean, we can say that length has perhaps left skewed distributon. Also, we can say that the minimum and maximum values of the length variables are 2.79 and 11.82 respectvely. Also, the 75% of the observations are below 9.51 and 75% of the observations are above 7.1. 
+On the other hand, we can say that spirit has the highest frequency in name variable.
+
+**c) What is the association between length of the ship and number of passengers?**
+
+**Usual Plot**
+
+```{r}
+plot(ship$length,ship$passengers,xlab = "Length",ylab="Passengers")
+```
+
+**ggplot**
+
+```{r}
+library(ggplot2)
+ggplot(ship,aes(x=length,y=passengers))+geom_point()
+```
+
+It is seen that there is a positive linear relationship between variables.
+
+**d) Draw the histogram of age**
+
+```{r}
+hist(ship$age,xlab="Age",main="Histogram of Age")
+```
+
+```{r}
+library(ggplot2)
+ggplot(ship,aes(x=age))+geom_histogram(bins=10)
+```
+
+By drawing histogram of the variable of interest, we can say that age variable has right skewed distribution.
+
+**e) Draw a bar plot of cruise lines. Then, write the name of most frequent three lines.**
+
+```{r}
+t<-table(ship$line)
+
+barplot(t,main="Bar plot of Cruise Lines")
+```
+
+
+```{r}
+library(ggplot2)
+ggplot(ship,aes(x=line))+geom_bar()+labs(title="Bar Plot of Cruise Lines")
+```
+
+Royal Caribbean, Carnival and Princess are the most frequent three cruise lines.
+
+
+**f)Consider the three cruise lines that you found in part d. Then, subset the dataset that contains these three cruise lines and corresponding number of passengers for these lines. Having a data, draw a box plot of passengers to compare these three lines.**
+
+Take the subset at first.
+
+
+```{r}
+rc<-ship$passengers[ship$line=="Royal_Caribbean"]
+ca<-ship$passengers[ship$line=="Carnival"]
+p<-ship$passengers[ship$line=="Princess"]
+```
+
+
+Create dataset. Since the length of subsets are not equal, I add NA terms to have an equal length.
+
+```{r}
+data<-data.frame(rc,ca=c(ca,NA),p=c(p,rep(NA,6)))
+head(data)
+```
+
+
+```{r}
+par(mfrow=c(1,3))
+boxplot(rc,main="Royal Caribbean")
+boxplot(ca,main="Carnival")
+boxplot(p,main="Princess")
+```
+
+
+
+```{r}
+library(ggplot2)
+ggplot(data,aes(x=as.factor(1),y=rc))+geom_boxplot()+labs(title="Royal Caribbean")
+ggplot(data,aes(x=as.factor(1),y=ca))+geom_boxplot()+labs(title="Carnival")
+ggplot(data,aes(x=as.factor(1),y=p))+geom_boxplot()+labs(title="Princess")
+```
+
+It is seen that royal caribbean has the highest median value, while princess has the lowest value. Also, royal caribbean has almost symetric, carnival has right skewed and princess has bimodel distrbution. Lastly, royal caribbean and carnival have outliers. 
+
+**g) Create a new variable and call it class of the passenger by using logical operator and for loop with regard to the following conditions. If number of passenger is less than 19, then class them as 0, it it is between 19 and 24, then class them as 1, and if it is greater than 23, then class them as 2. After that, draw a bar plot then write the class that has the highest frequency.**
+
+Here, I want to do some data manupulation.
+
+Let's consider,
+
+```{r}
+rc<-ship$passengers[ship$line=="Royal_Caribbean"]
+ca<-ship$passengers[ship$line=="Carnival"]
+p<-ship$passengers[ship$line=="Princess"]
+```
+
+Then, create a new dataset.
+
+```{r}
+name=c(rep("rc",length(rc)),rep("ca",length(ca)),rep("p",length(p)))
+values=c(rc,ca,p)
+newdata<-data.frame(name,values)
+head(newdata)
+```
+
+
+```{r}
+class=c()
+for (i in 1:length(newdata$values)){
+  if (newdata$values[i]<19){class[i]=0}
+  else if (newdata$values[i]>=19&newdata$values[i]<24){class[i]=1}
+    else{class[i]=2}
+  }
+
+```
+
+```{r}
+newdata<-data.frame(newdata,class)
+```
+
+```{r}
+barplot(table(newdata$class),main="Bar Plot of Class")
+```
+
+```{r}
+library(ggplot2)
+ggplot(newdata,aes(x=class))+geom_bar()+labs(title="Bar Plot of Class")
+```
+
+It is seen that class 2 has the highest frequency and class 0 has the lowest frequency.
+
+
+**Question 3**
+
+**a) For observations 10000 to 11000, get the mean of columns 8, 9, 10.**
+
+```{r}
+library(ggplot2)
+apply(diamonds[10000:11000, 8:10], 2, mean)
+```
+
+**b) Same as 'a' but round the results to one digit.**
+
+```{r}
+round(apply(diamonds[10000:11000, 8:10], 2, mean),1)
+```
+
+**c) Sort the rounded results in ascending order.**
+
+```{r}
+sort(round(apply(diamonds[10000:11000, 8:10], 2, mean),1))
+```
+
+**d) Calculate the median of table by the cut.**
+
+```{r}
+tapply(diamonds$table,diamonds$cut,median)
+```
+
+**e) Use 'apply' to perform a modulo division by 2 on each value in the x,y and z columns of the matrix.**
+
+```{r}
+subset<-diamonds[,8:10]
+head(apply(subset,1:2,function(x) x%%2)) #write head to see first 6 outputs
+```
+
+
